@@ -1,0 +1,16 @@
+package com.example.demo.controller;
+
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+
+import com.example.demo.service.HomeService;
+
+public class HomeControllerTestMock {
+	
+	@Mock //mock the service
+	private HomeService service;
+	
+	@InjectMocks //Inject the mock into controller	
+	private HomeController controller;
+
+}

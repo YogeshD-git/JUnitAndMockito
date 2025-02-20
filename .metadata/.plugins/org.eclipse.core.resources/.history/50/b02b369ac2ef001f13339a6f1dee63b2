@@ -1,0 +1,53 @@
+package com.example.demo.controller;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.springframework.http.ResponseEntity;
+
+import com.example.demo.service.HomeService;
+
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class) 
+public class HomeControllerTest {
+	private HomeController controller;
+	private HomeService homeService;
+	
+	@BeforeEach
+	void setup()
+	{
+		homeService = new HomeService();
+		controller = new HomeController(homeService);
+	}
+	
+	@Test
+	@Order(1)
+	@DisplayName("Test 1: Get Default Name")
+	void testGetName()
+	{
+		String result = controller.getName();
+		assertEquals("Yogesh Dahake", result,"The name should be 'Yogesh Dahake'");
+	}
+	
+	@Test
+	@Order(2)
+	@DisplayName("Test 2: Get Your Name")
+	void testGetYourName()
+	{
+		String result = controller.getYourName("Nita Dahake");
+		assertEquals("Hello Nita Dahake!", result,"The response should be 'Nita Dahake'\"");
+	}
+	
+	@Test
+	@Order(3)
+	@DisplayName("Test 3: Save Name")
+	void testSaveName() {
+		ResponseEntity<?> response = controller.saveName("Raju");
+		assertEquals(201, response,"Status code should be 201 Created");
+		assertEquals("Raju name is saved", response.getBody(),"Response body should match");
+	}
+}
